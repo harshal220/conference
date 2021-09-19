@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>*</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexComponent</name>
+    </types>
+    <types>
+        <members>uploadContactPicture</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexTestSuite</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>StaticResource</name>
+    </types>
+     <types>
+        <members>Contact-Conference Speaker</members>
+        <members>Contact-Contact Layout</members>
+		<members>Conference__c-Conference Layout</members>
+        <members>Conference_Speaker__c-Conference Speaker Layout</members>
+		<name>Layout</name>
+	</types>
+    <types>
+        <members>Conference__c</members>
+        <members>Conference_Speaker__c</members>
+        <members>Contact</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+		<members>Conference_Heading</members>
+		<name>CustomLabel</name>
+	</types>
+    <types>
+    <members>Conference</members>
+    <name>CustomApplication</name>
+</types>
+    <version>52.0</version>
+</Package>

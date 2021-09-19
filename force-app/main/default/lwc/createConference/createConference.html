@@ -1,0 +1,121 @@
+<template>
+    <!--Section start-->
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <!--Modal Header-->
+                    <header class="slds-modal__header">
+                        <lightning-button-icon icon-name="utility:close" class="slds-float_right" onclick={closeModal}
+                            alternative-text="close"></lightning-button-icon>
+                        <h2 id="modal-heading-01" class="slds-modal__title modal-heading">
+                            {modalHeader}
+                        </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                          <!--Spinner-->
+                        <template if:true={isLoaded}>
+                            <div class="spinner">
+                                <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                                </lightning-spinner>
+                            </div>
+                        </template>
+                        <!--Progres Wizard-->
+                        <lightning-progress-indicator current-step={currentStep} type="base" variant="base">
+                            <lightning-progress-step label="Step 1" value="1" onclick={handleOnStepClick}></lightning-progress-step>
+                            <lightning-progress-step label="Step 2" value="2" onclick={handleOnStepClick}></lightning-progress-step>
+                        </lightning-progress-indicator>
+                        <template if:true={isStepOne}>
+                            <!--Wizard First Step 1: Conferene form-->
+                            <div>
+                                <lightning-record-edit-form object-api-name="Conference__c" onsubmit={handleSubmit} onsuccess={handleSuccess}>
+                                    <lightning-layout horizontal-align="start" multiple-rows="true">
+                                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">
+                                            <lightning-input-field field-name="Name" required="true"></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">
+                                            <lightning-input-field field-name="Conference_Time__c"></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">
+                                            <lightning-input-field field-name="Conference_Duration__c" required="true"></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">
+                                            <lightning-input-field field-name="Conference_Room__c" required="true"></lightning-input-field>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">
+                                            <lightning-input-field field-name="Conference_Description__c"></lightning-input-field>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                    <lightning-button class="slds-m-top_small slds-m-left_medium" type="submit" label="Create Conference" disabled={disbaleButton}></lightning-button>
+                                </lightning-record-edit-form>
+                            </div>
+                        </template> 
+                        <template if:true={isStepTwo}>
+                            <div>
+                                <!--Wizard First Step 2: Conferene form-->
+                                <div class="conference-speaker-list slds-m-top_medium">
+                                    <template if:true={allSpeakers}>
+                                        <template for:each={allSpeakers} for:item="speaker">
+                                            <div key={speaker.Id}>
+                                                <lightning-layout horizontal-align="spread" multiple-rows="true">
+                                                    <lightning-layout-item size="4" small-device-size="2" medium-device-size="4" large-device-size="4" padding="around-small">
+                                                        <lightning-formatted-text value={speaker.speakerName} ></lightning-formatted-text>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="4" small-device-size="2" medium-device-size="4" large-device-size="4" padding="around-small">
+                                                        <lightning-formatted-text value={speaker.speakerEmail} ></lightning-formatted-text>
+                                                    </lightning-layout-item>
+                                                    <lightning-layout-item size="4" small-device-size="2" medium-device-size="4" large-device-size="4" padding="around-small" class="speaker-delete-btn"> 
+                                                        <div onclick={removeSpeaker} data-id={speaker.id}><lightning-icon icon-name="action:delete" alternative-text="Delete" title="Delete" size="x-small"></lightning-icon></div>
+                                                    </lightning-layout-item>
+                                                
+                                                </lightning-layout>
+                                            </div>
+                                        </template>
+                                    </template>
+                                </div>
+                                <!--Custom Lookup component: Search Speakers-->
+                                <div class="slds-m-top_medium">
+                                    <lightning-layout pull-to-boundary="small">
+                                            <lightning-layout-item padding="horizontal-small" flexibility="grow">
+                                                <c-search-component
+                                                    obj-name="Contact"
+                                                    icon-name="standard:contact"
+                                                    label-name="Search Speaker"
+                                                    placeholder="Search" 
+                                                    fields={fields}
+                                                    display-fields={displayFields}
+                                                    onlookup={handleLookup} 
+                                                   >
+                                                </c-search-component>
+                                        </lightning-layout-item>
+                                        <lightning-layout-item padding="horizontal-small" class="slds-m-top_large">
+                                            <lightning-button variant="brand" label="Add Speaker" title="Add Speaker" onclick={addMultipleSpeaker} class=""></lightning-button>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </div>
+                            </div>
+                        </template>
+                       
+                    </div>
+                    <!--Modal Footer-->
+                    <footer class="slds-modal__footer">
+                        <div class="">
+                            <div class="conference-actions">
+                                <template if:true={isEnablePrev}>
+                                    <lightning-button variant="Neutral" label="Back" class="slds-m-right_xx-small" onclick={handlePrev}></lightning-button>
+                                </template>
+                                
+                                <template if:true={isEnableNext}>
+                                    <lightning-button label="Next" variant="brand" onclick={handleNext}></lightning-button>
+                                </template>
+
+                                <template if:true={isEnableAddSpeaker}>
+                                    <lightning-button label="Submit" title="Add speaker to session" variant="brand" onclick={submitAllSpeakers}></lightning-button>
+                                </template>
+                            </div>
+                            <lightning-button label="Close" variant="brand"  slot="actions" onclick={closeModal}></lightning-button>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>  
+</template>

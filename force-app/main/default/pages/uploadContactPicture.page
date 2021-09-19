@@ -1,0 +1,29 @@
+<apex:page standardController="Contact" extensions="uploadContactPictureController" >
+    
+    <apex:form >
+        <apex:pageBlock title="Upload Contact">
+            <apex:pageBlockSection columns="1">
+                <apex:inputFile value="{!picture}" accept="image/*" style="width: 80px;" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:actionRegion >
+                    <apex:commandButton action="{!save}" value="Save" status="loadStatus" onclick="clicked();" />
+                </apex:actionRegion>
+            </apex:pageBlockButtons>
+        </apex:pageBlock> {!errorMessage}
+        
+        <script>
+        function clicked() {
+            if (confirm('Do you wanna to submit?')) {
+                yourformelement.submit();
+                
+            } else {
+                window.location.href ='https://motion-dev-ed--c.visualforce.com/apex/uploadContactPicture';
+                
+            }
+        }
+        
+        </script>
+        
+    </apex:form>
+</apex:page>

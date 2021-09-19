@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'nasa';
+    src: url('/resource/ConferenceResource/ASSET/font/Nasa21-l23X.ttf') format('TrueType');
+
+}
+.flex-container{
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: aliceblue; 
+    padding: 1rem;
+    display: flex;
+    color: #fff;
+    background: linear-gradient(90deg, rgba(6,27,78,1) 0%, rgba(9,118,121,0.9864320728291317) 29%, rgba(6,27,78,1) 100%);
+    box-shadow: 0 4px 3px rgb(1 87 155 / 50%);
+    align-items: center;
+}
+.conference-heading{
+    font-size: 30px!important;
+    font-weight: 500!important;
+    font-family: 'nasa';
+}
+.conference-banner-img{
+    height: 55px;
+}

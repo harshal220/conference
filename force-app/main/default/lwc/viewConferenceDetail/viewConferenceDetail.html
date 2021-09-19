@@ -1,0 +1,100 @@
+<template>
+    <!--Card Title-->
+    <lightning-card title="">
+        <div class="conference-margin">
+            <p class="slds-m-left_medium detail-heading">{selectedConferenceData.Name}</p>
+            <div class="slds-m-left_medium slds-m-top_medium">
+                <lightning-button label="Enroll" class="slds-m-right_xx-small btn-padding" variant="success"  slot="actions" onclick={handleSessionEnroll}></lightning-button>
+                <lightning-button label="Back" variant="brand" class="btn-padding" slot="actions" onclick={returnHome}></lightning-button>
+
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <!--Details of conference-->
+                        <p class="conference-detail-name slds-m-left_xx-small"></p>
+                        <div class="conference-detail-slot">
+                            <p class="font-color-blue">
+                                <lightning-icon icon-name="utility:clock" size="small" alternative-text="Session Time" title="Session Time"
+                                class="slds-m-right_small"></lightning-icon>
+                                    <b>
+                                        <lightning-formatted-date-time value={selectedConferenceData.Conference_Time__c}
+                                            year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit">
+                                        </lightning-formatted-date-time>
+                                    </b> 
+                            </p>
+                            <p class="font-color-blue slds-m-top_small">
+                                <lightning-icon icon-name="utility:checkin" size="small" alternative-text="Location" title="Location"
+                                class="slds-m-right_small"></lightning-icon>
+                                <b>{selectedConferenceData.Conference_Room__c}</b>
+                            </p>
+                            <p class="slds-m-top_medium">Conference Description</p>
+                            <p class="conference-description conference-detail-info">
+                                <lightning-formatted-text value={selectedConferenceData.Conference_Description__c} ></lightning-formatted-text>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small">    
+            <!--Speaker List Content-->
+            <div class="slds-grid slds-gutters slds-wrap  slds-m-top_medium slds-m-bottom_medium slds-has-flexi-truncate">               
+                <template for:each={conferenceSpeakers} for:item="speakers"> 
+                    <div key={speakers.Id} class="courses-container slds-col slds-size_1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3 ">
+                        <div class="course">
+                            <div class="course-preview" if:true={speakers.Picture_Path__c}>
+                                <img class="conference-speakers" src={speakers.Picture_Path__c} />
+                            </div>
+                            <div class="course-preview" if:false={speakers.Picture_Path__c}>
+                                <img class="conference-speakers" src={noPreviewImage} />
+                            </div>
+                            <div class="course-info">
+                                <h3>{speakers.Name}</h3>
+                                <h4>
+                                    <lightning-icon icon-name="utility:email" size="small" alternative-text="email" title="email"
+                                    class="slds-m-right_xxx-small"></lightning-icon>
+                                    <span class="slds-m-left_xx-small">{speakers.Email}</span>
+                                </h4>
+                                <h5>
+                                    <lightning-formatted-text value="Master of all things JavaScript. Cat herder. ECMAScript lover." ></lightning-formatted-text>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+    <!--Enrollment form : Future scope-->
+    <template if:true={isEnrollMentForm}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+              <header class="slds-modal__header">
+                <lightning-button-icon icon-name="utility:close" class="slds-float_right" onclick={closeModal} alternative-text="close"></lightning-button-icon>
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Enroll for Session</h2>
+              </header>
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-layout horizontal-align="start" multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">   
+                        <lightning-input  name="FirstName" required="true" label="First Name"  onchange={handleInputChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">   
+                        <lightning-input  name="LastName" required="true" label="Last Name"  onchange={handleInputChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">   
+                        <lightning-input  name="Email" label="Email" required="true"  onchange={handleInputChange}></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6" padding="around-small">   
+                        <lightning-input  name="Phone" label="Phone"  onchange={handleInputChange}></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+              </div>
+              <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closeModal}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={submitForm}>Submit</button>
+              </footer>
+            </div>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

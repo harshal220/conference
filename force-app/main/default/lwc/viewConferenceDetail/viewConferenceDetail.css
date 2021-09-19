@@ -1,0 +1,89 @@
+@font-face {
+    font-family: 'hero';
+    src: url('/resource/ConferenceResource/ASSET/font/Hero New Regular.ttf') format('TrueType');
+
+}
+.font-color-blue{
+    color: #039be5;
+}
+.conference-detail-slot{
+    margin-top: 18px;
+}
+.course {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 10px 10px 10px 10px rgb(0 0 0 / 20%);
+	display: flex;
+	max-width: 80%;
+	margin: 20px;
+	overflow: hidden;
+	width: 700px;
+    margin-left: 47px;
+}
+
+.course h6 {
+	opacity: 0.6;
+	margin: 0;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.course h2 {
+	letter-spacing: 1px;
+	margin: 10px 0;
+}
+
+.course-preview {
+	background-color: #2A265F;
+	color: #fff;
+	padding: 30px;
+	max-width: 250px;
+    padding-top: 46px;
+}
+
+.course-preview a {
+	color: #fff;
+	display: inline-block;
+	font-size: 12px;
+	opacity: 0.6;
+	margin-top: 30px;
+	text-decoration: none;
+    font-weight: bold;
+
+}
+
+.course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+}
+.conference-speakers{
+    border-radius: 50%;
+    height: 4rem;
+    width: 6rem;
+}
+.conference-detail-info{
+    font-size: 16px;
+}
+.course-info h3{
+	color: #2a265f;
+    font-weight: bold;
+	padding-bottom: 6px;
+}
+.course-info h4{
+	color: #2a265f;
+	padding-bottom: 6px;
+}
+.detail-heading{
+	font-weight: bold;
+    font-size: 22px;
+}
+.conference-margin{
+	margin: 20px 20px 20px 47px;
+	font-size: 19px!important;
+	font-weight: 500;
+	font-family: monospace;
+}
+.btn-padding button{
+	padding: 0px 30px 0px 30px;
+}

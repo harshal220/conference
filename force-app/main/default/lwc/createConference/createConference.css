@@ -1,0 +1,17 @@
+.conference-actions{
+    float: left;
+}
+.speaker-delete-btn{
+    text-align: right;
+}
+.conference-speaker-list-table{
+    border: 1px solid;
+    border-radius: 3px;
+}
+.destrctive-btn {
+    --sds-c-button-destructive-color-background:red;
+}
+.modal-heading{
+    font-weight: bold;
+    font-size: 22px;
+}

@@ -1,0 +1,111 @@
+<template>
+    <!--Conference List view-->
+    <template if:false={isConferenceDetail}>
+        <lightning-card  title="">
+                <lightning-button slot="actions" icon-name="utility:loop" class="slds-m-right_x-small" onclick={refreshView} alternative-text="Refresh" title="Refresh View" size="medium"></lightning-button>
+                <lightning-button slot="actions" label="Create Session" variant="brand" onclick={createConference}></lightning-button>  
+
+            <div class="slds-form-element search-font">
+                <div class="slds-form-element__control slds-input-has-fixed-addon" >
+                      <span class="slds-form-element__addon" id="fixed-text-addon-pre" style="margin-top: 15px;">Search</span>
+                      <lightning-input  name="searchsession" style="width:50%" label="" placeholder="Search session..." onchange={handleInputChange}></lightning-input>
+                </div>
+            </div>
+            <!--View all conferneces-->
+            <div class="slds-m-left_small slds-m-right_medium">
+                <div class="myapp slds-size_1-of-1 slds-small-size_1-of-1 slds-large-size_1-of-1">
+                    <!--Content-->
+                    <div class="Content-Title-Main">Welcome to Conference
+                        <span class="slds-m-left_large"></span>
+                    </div>
+                    
+                    <template for:each={retriveSearchData} for:item="item" for:index="index"> 
+                    <div key={item.conf.Id} class="conference-list">
+                        <div class="slds-box bg-white slds-m-top_large">
+                            <lightning-layout class="flex-container">
+                                <!--Column A-->
+                                <lightning-layout-item padding="around-small" class="flex-item-12 left-padding-zero" 
+                                    style="width:20%">
+                                    <div class="tbl_item slds-m-top_large slds-text-align_left slds-border_right">
+                                        <p class="conference_Label" style="font-weight: bold;font-size: 22px;">
+                                            <b>{item.conf.Name}</b>
+                                        </p>
+                                    </div>
+                                </lightning-layout-item>
+                                <!--Column B-->
+                                <lightning-layout-item padding="around-small" class="flex-item-25 left-padding-zero"  
+                                    style="width:15%">
+                                    <div class="tbl_item slds-m-top_large slds-text-align_left slds-border_right">
+                                        Conference Date/Time
+                                        <p class="conference_Label">
+                                            <b>
+                                                <lightning-formatted-date-time value={item.conf.Conference_Time__c}
+                                                    year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit">
+                                                </lightning-formatted-date-time>
+                                            </b> 
+                                        </p>
+                                    </div>
+                                </lightning-layout-item>
+                                <!--Column C-->
+                                <lightning-layout-item padding="around-small" class="flex-item-12 left-padding-zero" 
+                                    style="width:15%">
+                                    <div class="tbl_item slds-m-top_large slds-text-align_left slds-border_right">
+                                        Conference Duration
+                                        <p class="conference_Label">
+                                            <b>{item.conf.Conference_Duration__c}</b>
+                                        </p>
+                                    </div>
+                                </lightning-layout-item>
+                                <!--Column D-->
+                                <lightning-layout-item padding="around-small" class="flex-item-12 left-padding-zero"  
+                                    style="width:15%">
+                                    <div class="tbl_item slds-m-top_large slds-text-align_left slds-border_right">
+                                        Conference Location
+                                        <p class="conference_Label">
+                                            <b>{item.conf.Conference_Room__c}</b>
+                                        </p> 
+                                    </div>
+                                </lightning-layout-item>
+                                 <!--Column D-->
+                                <lightning-layout-item padding="around-small" class="flex-item-12 left-padding-zero"  
+                                 style="width:15%">
+                                 <div class="tbl_item slds-m-top_large slds-text-align_left">
+                                     Level
+                                     <p class="conference_Label">
+                                         <b>{item.conf.Level__c}</b>
+                                     </p> 
+                                 </div>
+                             </lightning-layout-item>
+                                <!--Column E with Button-->
+                                <lightning-layout-item style="width:15%" padding="around-small" class="flex-item-12 left-padding-zero blue-btn-div" >
+                                    <span>
+                                        <button data-index={index} onclick={viewConferenceDetail} key={item.conf.Id} class="slds-button slds-m-top_large slds-button_outline-brand btn-color-blue"
+                                            type="button">
+                                            View Detail
+                                        </button>
+                                    </span>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    </div>
+                    </template>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+    <!--view-conference-detail component-->
+    <div if:true={isConferenceDetail}>
+        <c-view-conference-detail onreturnpage={handleReturnToHome} conference={selectedConference_SpeakerData}></c-view-conference-detail>
+    </div>
+    <!--create-conference component-->
+    <template if:true={openModal}>
+        <c-create-conference onhidemodal={closeModal} onrefreshdata={handleRefresh}></c-create-conference>
+    </template>
+    <!--Spinner-->
+    <template if:true={isLoaded}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+            </lightning-spinner>
+        </div>
+    </template>
+</template>
