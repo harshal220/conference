@@ -2,6 +2,7 @@
 *    Author     : Harshal Kolhe
 *    Description: Create Conference and Add Speaker's. Multi Step wizard
 *    Date       : 16/09/2021
+*    Last Modified : 20/10/2021
 */
 
 import { LightningElement,api,track} from 'lwc';
